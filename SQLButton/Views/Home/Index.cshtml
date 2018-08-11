@@ -5,47 +5,40 @@
         $('.table .color').each(function (index, element) { $(element).parent().css('background-color', $(element).html()); });
     });
 </script>
-
-<section class="content-header">
-    <h1>
-        Статус
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-wrench"></i>Администратор</a></li>
-        <li class="active">Статус</li>
-    </ol>
-</section>
-<section class="content">
-    <div style="color: red;font-weight:700;">@Html.Raw(Model.ErrorMessage)</div>
+    
+    <h2 style="margin-top:20px">SQL Test</h2>
+    <br/>
+    
+    <div>
     @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @id = "saveForm" }))
     {
-    <table class="table table-bordered table-striped table-condensed table-auto" style="width:700px">
-        <thead>
-        <th></th>
-        <th>N</th>
-        <th>Параметр</th>
-        <th></th>
-        </thead>
-        <tbody>
-            <tr>
-                <td> Поле 1: </td>
-                <td> @ViewBag.Info1<div class='color' style='display: none;'>#@ViewBag.Color1</div></td>
-                <td> @Html.EditorFor(e => e.SPParameters[0])</td>
-                <td><input type="submit" name="Button1" value="Запустить"></td>
-            </tr>
-            <tr>
-                <td> Поле 2: </td>
-                <td> @ViewBag.Info2<div class='color' style='display: none;'>#@ViewBag.Color2</div></td>
-                <td> @Html.EditorFor(e => e.SPParameters[1])</td>
-                <td><input type="submit" name="Button2" value="Запустить"></td>
-            </tr>
-            <tr>
-                <td> Поле 3: </td>
-                <td> @ViewBag.Info3<div class='color' style='display: none;'>#@ViewBag.Color3</div></td>
-                <td> @Html.EditorFor(e => e.SPParameters[2])</td>
-                <td><input type="submit" name="Button3" value="Запустить"></td>
-            </tr>
-        </tbody>
-    </table>
+        <table class="table table-bordered table-striped table-condensed table-auto" style="width:700px">
+            <thead>
+            <th></th>
+            <th>N</th>
+            <th>Parameter</th>
+            <th></th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td> Field 1: </td>
+                    <td> @ViewBag.Info1<div class='color' style='display: none;'>#@ViewBag.Color1</div></td>
+                    <td> @Html.EditorFor(e => e.SPParameters[0])</td>
+                    <td><input type="submit" name="Button1" value="Run" style="width:80px;"></td>
+                </tr>
+                <tr>
+                    <td> Field 2: </td>
+                    <td> @ViewBag.Info2<div class='color' style='display: none;'>#@ViewBag.Color2</div></td>
+                    <td> @Html.EditorFor(e => e.SPParameters[1])</td>
+                    <td><input type="submit" name="Button2" value="Run" style="width:80px;"></td>
+                </tr>
+                <tr>
+                    <td> Field 3: </td>
+                    <td> @ViewBag.Info3<div class='color' style='display: none;'>#@ViewBag.Color3</div></td>
+                    <td> @Html.EditorFor(e => e.SPParameters[2])</td>
+                    <td><input type="submit" name="Button3" value="Run" style="width:80px;"></td>
+                </tr>
+            </tbody>
+        </table>
     }
-</section>
+        </div>

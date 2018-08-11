@@ -1,0 +1,129 @@
+﻿@model IEnumerable<RatesModel>
+@{
+    ViewBag.Title = "Rates";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+    <div class="col-md-4"><h2 style="float:left;margin-top:20px">Rates</h2></div>
+    
+        <div id="filters" class="input-group pull-right" style="width:200px;margin-top:20px">
+            <span class="input-group-addon" style="padding:16px">Rates</span>
+            <div>
+                <div class="filterbutton form-control" style="float:none">
+                    <input type="button" value="Manual Edit" class="btn btn-default" id="btnEdit" />
+                </div>
+                <div class="savebutton form-control" style="float:none">
+                    <input type="submit" value="Save" class="btn btn-default" id="btnSave" />
+                </div>
+                <div class="cancelbutton form-control" style="float:none">
+                    <button class="btn btn-default" id="btnCancel">Cancel</button>
+                </div>
+            </div>
+        </div>
+    
+
+    @using (Html.BeginForm("SaveRates", "Home", FormMethod.Post, new { @id = "saveForm" }))
+    {
+        <table class="table table-striped" id="results-table">
+            <thead>
+                <tr>
+                    <th>MarcNumber</th>
+                    <th>CommodityType</th>
+                    <th class="viewcol">Rate 0-100</th>
+                    <th class="viewcol">Rate 100-600</th>
+                    <th class="viewcol">Rate 600-1200</th>
+                    <th class="viewcol">Rate 1200-1700</th>
+                    <th class="viewcol">Rate 1700-5000</th>
+                    <th class="editcol">Rate 0-100</th>
+                    <th class="editcol">Rate 100-600</th>
+                    <th class="editcol">Rate 600-1200</th>
+                    <th class="editcol">Rate 1200-1700</th>
+                    <th class="editcol">Rate 1700-5000</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(i => item.MarcNumber)</td>
+                            <td>@Html.DisplayFor(i => item.CommodityType)</td>
+
+                            <td class="viewcol">
+                                @Html.DisplayFor(i => item.Rate100)<br />
+                            </td>
+                            <td class="viewcol">
+                                @Html.DisplayFor(i => item.Rate600)<br />
+                            </td>
+                            <td class="viewcol">
+                                @Html.DisplayFor(i => item.Rate1200)<br />
+                            </td>
+                            <td class="viewcol">
+                                @Html.DisplayFor(i => item.Rate1700)<br />
+                            </td>
+                            <td class="viewcol">
+                                @Html.DisplayFor(i => item.Rate5000)<br />
+                            </td>
+
+                            <td class="editcol">
+                                @Html.HiddenFor(i => item.Id)
+                                @Html.TextBoxFor(i => item.Rate100, new { @id = "rate100_" + item.Id, @name = "rate100_" + item.Id })<br />
+                            </td>
+                            <td class="editcol">
+                                @Html.TextBoxFor(i => item.Rate600, new { @id = "rate600_" + item.Id, @name = "rate600_" + item.Id })<br />
+                            </td>
+                            <td class="editcol">
+                                @Html.TextBoxFor(i => item.Rate1200, new { @id = "rate1200_" + item.Id, @name = "rate1200_" + item.Id })<br />
+                            </td>
+                            <td class="editcol">
+                                @Html.TextBoxFor(i => item.Rate1700, new { @id = "rate1700_" + item.Id, @name = "rate1700_" + item.Id })<br />
+                            </td>
+                            <td class="editcol">
+                                @Html.TextBoxFor(i => item.Rate5000, new { @id = "rate5000_" + item.Id, @name = "rate5000_" + item.Id })<br />
+                            </td>
+
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    }
+
+    @section Scripts {
+        <script type="text/javascript">
+		$(function () {
+			$(".editcol").hide();
+			$("#filters .savebutton").hide();
+			$("#filters .cancelbutton").hide();
+
+			$("input[id^=rate]").each(function () {
+				$(this).attr("name", $(this).attr("id"));
+			});
+
+			$("#btnEdit").click(function () {
+				$(".viewcol").hide();
+				$(".editcol").show();
+				$("#filters .savebutton").show();
+				$("#filters .cancelbutton").show();
+				$("#filters .savebutton input").removeAttr("disabled");
+                $("#saveForm").attr("action", "@Url.Action("SaveRates","Home")");
+                $("table input[id^=rate]").first().select().focus();
+
+			});
+
+			if ($("#results-table tbody tr").length < 1) {
+				$("#btnEdit").attr("disabled", "disabled");
+			}
+
+			$("#btnCancel").click(function () {
+                $("#saveForm").attr("action", "@Url.Action("Rates","Home")");
+                $("#saveForm").submit();
+            });
+
+            $("#btnSave").click(function () {
+                $("#saveForm").submit();
+            });
+		});
+        </script>
+    }
